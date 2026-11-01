@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UtsavAI — AI-Powered Celebration & Event Planner
+
+GenAI-driven planning tool for Indian weddings, birthdays, pujas, and community celebrations. Built for the **Hack2Skill PromptWars Challenge 5**.
+
+## Features
+
+- **AI-Powered Planning** — Google Gemini generates personalized ideas, budgets, timelines, and vendor suggestions
+- **Budget Engine** — Pure TypeScript arithmetic engine (AI ideates, code calculates) with real-time redistribution
+- **Task Timeline** — Dependency-aware scheduling with critical-path detection
+- **Vendor Discovery** — City-aware vendor recommendations with Google Maps integration
+- **Streaming AI Chat** — Ask follow-up questions with real-time streamed responses
+- **ICS Calendar Export** — Download tasks as .ics for Google Calendar / Outlook
+- **3D Visualizations** — Three.js confetti, budget flow, and lantern scenes with hardware tier gating
+- **Full Accessibility** — WCAG 2.2 AA compliant: skip links, focus management, pause animations, 44px targets
+- **Security First** — Nonce-only CSP, rate limiting, prompt injection defense, constant-time edit key verification
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 (App Router, Turbopack) |
+| Language | TypeScript (strict) |
+| Styling | Tailwind CSS v4 |
+| AI | Google Gemini via `@google/genai` |
+| Database | Firestore (Admin SDK, 180-day TTL) |
+| Validation | Zod v4 (strict schemas) |
+| 3D | Three.js (lazy-loaded, tier-gated) |
+| Testing | Vitest + Playwright |
+| Deployment | Docker → Cloud Run |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
+cp .env.example .env.local   # add GEMINI_API_KEY
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Testing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm test              # 625+ unit tests (Vitest)
+npx playwright test   # 53 e2e tests (Playwright)
+```
 
-## Learn More
+## Architecture
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/              # Next.js App Router pages + API routes
+│   └── api/          # REST endpoints (plan, vendors, refine, health)
+├── components/       # React components (WCAG 2.2 AA)
+│   └── three/        # Lazy-loaded Three.js scenes
+└── lib/
+    ├── ai/           # Gemini prompts, streaming, template fallback
+    ├── contracts/    # Zod schemas, constants, types
+    ├── engine/       # Budget, schedule, format, iCal, particles
+    ├── security/     # CSP, rate limit, sanitize, edit keys, IP, origin
+    └── store/        # Firestore + in-memory store
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Security
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **CSP**: Nonce-only (`script-src 'nonce-...'`), zero `unsafe-inline`
+- **Rate Limiting**: Per-client (IPv6 /64 keyed) + global AI ceiling (120/min)
+- **Edit Keys**: 256-bit random, SHA-256 hashed, constant-time comparison
+- **Prompt Injection**: User text wrapped in `<<<USER_DATA>>>` delimiters
+- **Body Validation**: Size-capped request parsing with early rejection
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+docker build -t utsavai .
+docker run -p 3000:3000 utsavai
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For GCP Cloud Run, set environment variables:
+- `GEMINI_API_KEY` or use Vertex AI with ADC
+- `FIRESTORE_DATABASE` (named database ID)
+- `NEXT_PUBLIC_BASE_URL`
+
+## License
+
+MIT

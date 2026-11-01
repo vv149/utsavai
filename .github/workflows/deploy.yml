@@ -1,0 +1,47 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches: [main]
+
+env:
+  GCP_PROJECT: ${{ vars.GCP_PROJECT }}
+  REGION: asia-south1
+  SERVICE: utsavai
+  REPO: utsavai
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
+          service_account: ${{ vars.WIF_SA }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build & push image
+        run: |
+          IMAGE="${REGION}-docker.pkg.dev/${GCP_PROJECT}/${REPO}/${SERVICE}"
+          gcloud builds submit --tag "${IMAGE}:${{ github.sha }}" --timeout=600s
+
+      - name: Deploy to Cloud Run
+        run: |
+          IMAGE="${REGION}-docker.pkg.dev/${GCP_PROJECT}/${REPO}/${SERVICE}"
+          gcloud run deploy "$SERVICE" \
+            --image="${IMAGE}:${{ github.sha }}" \
+            --region="$REGION" \
+            --platform=managed \
+            --allow-unauthenticated \
+            --port=8080
+
+      - name: Show URL
+        run: |
+          gcloud run services describe "$SERVICE" --region="$REGION" --format='value(status.url)'
