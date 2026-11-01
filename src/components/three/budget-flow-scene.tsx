@@ -5,6 +5,7 @@ import * as THREE from "three";
 
 const CATEGORY_COLORS = [0xC41E3A, 0xFFD700, 0x1B4332, 0xFF6B35, 0x7B2D8E, 0x2563EB, 0xE11D48];
 
+/** Animated budget flow visualization with colour-coded spheres. */
 export default function BudgetFlowScene({ tier }: { tier: "high" | "low" }) {
   const containerRef = useRef<HTMLDivElement>(null);
 

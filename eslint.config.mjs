@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
       ...jsxA11y.configs.strict.rules,
       "no-console": ["error", { allow: ["error"] }],
       "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-non-null-assertion": "error",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
+      "@typescript-eslint/consistent-type-imports": ["error", { fixStyle: "inline-type-imports" }],
     },
   },
   globalIgnores([
@@ -20,6 +26,8 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "tests/**",
+    "coverage/**",
+    "playwright-report/**",
   ]),
 ]);
 

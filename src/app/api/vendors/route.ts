@@ -5,6 +5,7 @@ import { applyRateLimit, applyOriginCheck } from "@/lib/server/middleware";
 import { getStore } from "@/lib/server/store-singleton";
 import { buildApiCspHeader } from "@/lib/security/csp";
 
+/** Fetches vendor places via Google Maps grounding. */
 export async function POST(request: Request): Promise<Response> {
   return safeHandler(async () => {
     const originErr = applyOriginCheck(request);

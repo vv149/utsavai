@@ -5,6 +5,7 @@ import { applyRateLimit, applyOriginCheck } from "@/lib/server/middleware";
 import { getStore } from "@/lib/server/store-singleton";
 import { buildApiCspHeader } from "@/lib/security/csp";
 
+/** Streams a follow-up AI response about an existing plan. */
 export async function POST(request: Request): Promise<Response> {
   return safeHandler(async () => {
     const originErr = applyOriginCheck(request);

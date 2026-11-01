@@ -6,6 +6,7 @@ import { getStore } from "@/lib/server/store-singleton";
 import { hashEditKey } from "@/lib/security/edit-key";
 import { buildApiCspHeader } from "@/lib/security/csp";
 
+/** Loads a plan by ID, stripping the edit key hash. */
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -26,6 +27,7 @@ export async function GET(
   });
 }
 
+/** Edits a plan's budget or task completion via edit key. */
 export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> }

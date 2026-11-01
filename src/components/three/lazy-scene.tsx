@@ -8,6 +8,7 @@ const LanternScene = lazy(() => import("./lantern-scene"));
 
 type SceneType = "confetti" | "budget-flow" | "lanterns";
 
+/** Lazy-loads a Three.js scene with Suspense and tier gating. */
 export function LazyScene({ scene, paused }: { scene: SceneType; paused: boolean }) {
   const [tier, setTier] = useState<"high" | "low" | "none">("none");
 

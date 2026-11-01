@@ -3,10 +3,8 @@ import "./globals.css";
 import { SkipLink } from "@/components/skip-link";
 import { PauseAnimations } from "@/components/pause-animations";
 import { rootMetadata } from "@/lib/seo/metadata";
-import { BRAND_COLORS } from "@/lib/site";
+import { BRAND, BRAND_COLORS, SITE_URL } from "@/lib/site";
 import { buildLandingJsonLd, serializeJsonLd } from "@/lib/seo/json-ld";
-import { SITE_URL } from "@/lib/site";
-import { BRAND } from "@/lib/site";
 import { SEO_COPY, FEATURES } from "@/lib/seo/copy";
 import { FAQ } from "@/lib/seo/faq";
 

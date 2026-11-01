@@ -5,6 +5,7 @@ import * as THREE from "three";
 
 const LANTERN_COLORS = [0xFF6B35, 0xFFD700, 0xE11D48, 0xC41E3A];
 
+/** Rising lantern animation with glow effect. */
 export default function LanternScene({ tier }: { tier: "high" | "low" }) {
   const containerRef = useRef<HTMLDivElement>(null);
 

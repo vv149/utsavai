@@ -4,6 +4,7 @@ import { applyRateLimit } from "@/lib/server/middleware";
 import { getStore } from "@/lib/server/store-singleton";
 import { buildApiCspHeader } from "@/lib/security/csp";
 
+/** Exports a plan's timeline as an ICS calendar file. */
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }

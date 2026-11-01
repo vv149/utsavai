@@ -7,6 +7,7 @@ const COLORS = [0xC41E3A, 0xFFD700, 0x1B4332, 0xFF6B35, 0x7B2D8E];
 const HIGH_COUNT = 200;
 const LOW_COUNT = 50;
 
+/** Falling confetti particle animation. */
 export default function ConfettiScene({ tier }: { tier: "high" | "low" }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
