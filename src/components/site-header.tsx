@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { APP_NAME } from "@/lib/contracts/constants";
 
 /** Site header with app name. */
@@ -12,9 +13,9 @@ export function SiteHeader() {
       }}
     >
       <nav aria-label="Main">
-        <a href="/" className="text-lg font-bold" style={{ color: "var(--color-gold)" }}>
+        <Link href="/" className="text-lg font-bold" style={{ color: "var(--color-gold)" }}>
           {APP_NAME}
-        </a>
+        </Link>
       </nav>
     </header>
   );

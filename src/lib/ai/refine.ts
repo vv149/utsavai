@@ -1,4 +1,4 @@
-import { getGenAI, PLAN_MODEL, AI_TIMEOUT_MS } from "./client";
+import { getGenAI, PLAN_MODEL } from "./client";
 import { REFINE_SYSTEM_INSTRUCTION, buildRefinePrompt } from "./prompts";
 
 /** Streams a refine/ask response. Returns an async iterable of text chunks. */

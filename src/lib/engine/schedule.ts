@@ -14,7 +14,8 @@ export function topologicalSort(tasks: readonly Task[]): Task[] {
   for (const t of tasks) {
     for (const dep of t.depends) {
       if (!idSet.has(dep)) continue;
-      adj.get(dep)!.push(t.id);
+      const depAdj = adj.get(dep);
+      if (depAdj) depAdj.push(t.id);
       inDegree.set(t.id, (inDegree.get(t.id) ?? 0) + 1);
     }
   }
@@ -26,7 +27,7 @@ export function topologicalSort(tasks: readonly Task[]): Task[] {
 
   const sorted: string[] = [];
   while (queue.length > 0) {
-    const current = queue.shift()!;
+    const current = queue.shift() as string;
     sorted.push(current);
     for (const neighbor of adj.get(current) ?? []) {
       const newDeg = (inDegree.get(neighbor) ?? 1) - 1;
@@ -41,7 +42,7 @@ export function topologicalSort(tasks: readonly Task[]): Task[] {
   }
 
   const taskMap = new Map(tasks.map((t) => [t.id, t]));
-  return sorted.map((id) => taskMap.get(id)!);
+  return sorted.map((id) => taskMap.get(id) as Task);
 }
 
 /** Computes scheduled dates for sorted tasks relative to an event date. */

@@ -1,4 +1,4 @@
-import { getGenAI, PLAN_MODEL, AI_TIMEOUT_MS } from "./client";
+import { getGenAI, PLAN_MODEL } from "./client";
 import { VENDOR_SYSTEM_INSTRUCTION, buildVendorPrompt } from "./prompts";
 import type { VendorPlace } from "@/lib/contracts/plan";
 

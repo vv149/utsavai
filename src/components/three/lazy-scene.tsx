@@ -1,6 +1,6 @@
 "use client";
 
-import { lazy, Suspense, useState, useEffect } from "react";
+import { lazy, Suspense, useMemo } from "react";
 
 const ConfettiScene = lazy(() => import("./confetti-scene"));
 const BudgetFlowScene = lazy(() => import("./budget-flow-scene"));
@@ -10,15 +10,11 @@ type SceneType = "confetti" | "budget-flow" | "lanterns";
 
 /** Lazy-loads a Three.js scene with Suspense and tier gating. */
 export function LazyScene({ scene, paused }: { scene: SceneType; paused: boolean }) {
-  const [tier, setTier] = useState<"high" | "low" | "none">("none");
-
-  useEffect(() => {
-    if (paused) {
-      setTier("none");
-      return;
-    }
+  const tier = useMemo<"high" | "low" | "none">(() => {
+    if (paused) return "none";
+    if (typeof navigator === "undefined") return "none";
     const cores = navigator.hardwareConcurrency ?? 2;
-    setTier(cores >= 4 ? "high" : "low");
+    return cores >= 4 ? "high" : "low";
   }, [paused]);
 
   if (tier === "none") return null;

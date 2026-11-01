@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
@@ -12,13 +13,13 @@ export default function NotFound() {
         <p className="text-lg mb-6" style={{ color: "var(--color-text-muted)" }}>
           This plan doesn&apos;t exist or has expired.
         </p>
-        <a
+        <Link
           href="/"
           className="rounded-lg px-6 py-3 font-medium min-h-[44px] inline-block"
           style={{ backgroundColor: "var(--color-accent)", color: "white" }}
         >
           Create a new plan
-        </a>
+        </Link>
       </main>
       <SiteFooter />
     </>

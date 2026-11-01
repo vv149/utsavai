@@ -1,4 +1,4 @@
-import { getGenAI, PLAN_MODEL, AI_TIMEOUT_MS, MAX_TOKENS_EN, MAX_TOKENS_OTHER } from "./client";
+import { getGenAI, PLAN_MODEL, MAX_TOKENS_EN, MAX_TOKENS_OTHER } from "./client";
 import { PLAN_SYSTEM_INSTRUCTION, buildPlanPrompt } from "./prompts";
 import { AiPlanSchema } from "@/lib/contracts/plan";
 import type { AiPlan, Brief } from "@/lib/contracts/plan";

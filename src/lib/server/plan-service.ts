@@ -78,7 +78,7 @@ export async function editPlan(
       const taskMap = new Map(edits.tasks.map((t) => [t.id, t.done]));
       plan.tasks = plan.tasks.map((t) => ({
         ...t,
-        done: taskMap.has(t.id) ? taskMap.get(t.id)! : t.done,
+        done: taskMap.has(t.id) ? (taskMap.get(t.id) ?? t.done) : t.done,
       }));
     }
 

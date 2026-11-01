@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { APP_NAME } from "@/lib/contracts/constants";
 
 /** Site footer. */
 export function SiteFooter() {
   const [year, setYear] = useState(2026);
+
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- client-only Date read
   useEffect(() => setYear(new Date().getFullYear()), []);
 
   return (

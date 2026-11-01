@@ -1,47 +1,52 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useSyncExternalStore, useEffect } from "react";
+
+function getSnapshot(): boolean {
+  try {
+    return localStorage.getItem("utsavai-pause-animations") === "true";
+  } catch {
+    return false;
+  }
+}
+
+const serverSnapshot = () => false;
+
+let listeners: Array<() => void> = [];
+
+function subscribe(cb: () => void): () => void {
+  listeners = [...listeners, cb];
+  function onStorage(e: StorageEvent) {
+    if (e.key === "utsavai-pause-animations") cb();
+  }
+  window.addEventListener("storage", onStorage);
+  return () => {
+    listeners = listeners.filter((l) => l !== cb);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+function emitChange() {
+  for (const l of listeners) l();
+}
 
 /** Toggle button that pauses all animations (WCAG 2.2.2). Persisted in localStorage. */
 export function PauseAnimations() {
-  const [paused, setPaused] = useState(false);
+  const paused = useSyncExternalStore(subscribe, getSnapshot, serverSnapshot);
 
   useEffect(() => {
+    document.documentElement.classList.toggle("paused-animations", paused);
+  }, [paused]);
+
+  const toggle = useCallback(() => {
+    const next = !getSnapshot();
     try {
-      const stored = localStorage.getItem("utsavai-pause-animations");
-      if (stored === "true") {
-        setPaused(true);
-        document.documentElement.classList.add("paused-animations");
-      }
+      localStorage.setItem("utsavai-pause-animations", String(next));
     } catch {
       // localStorage unavailable
     }
-  }, []);
-
-  const toggle = useCallback(() => {
-    setPaused((prev) => {
-      const next = !prev;
-      document.documentElement.classList.toggle("paused-animations", next);
-      try {
-        localStorage.setItem("utsavai-pause-animations", String(next));
-      } catch {
-        // localStorage unavailable
-      }
-      return next;
-    });
-  }, []);
-
-  // ponytail: sync across tabs
-  useEffect(() => {
-    function onStorage(e: StorageEvent) {
-      if (e.key === "utsavai-pause-animations") {
-        const val = e.newValue === "true";
-        setPaused(val);
-        document.documentElement.classList.toggle("paused-animations", val);
-      }
-    }
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
+    document.documentElement.classList.toggle("paused-animations", next);
+    emitChange();
   }, []);
 
   return (

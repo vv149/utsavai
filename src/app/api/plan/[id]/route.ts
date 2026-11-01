@@ -20,7 +20,7 @@ export async function GET(
     const plan = await store.load(id);
     if (!plan) return errorResponse(404, "Plan not found");
 
-    const { editKeyHash, ...safe } = plan;
+    const { editKeyHash: _hash, ...safe } = plan;
     const response = jsonResponse(safe);
     response.headers.set("Content-Security-Policy", buildApiCspHeader());
     return response;
@@ -53,7 +53,7 @@ export async function PATCH(
       const updated = await editPlan(store, id, hashEditKey(editKey), edits);
       if (!updated) return errorResponse(404, "Plan not found");
 
-      const { editKeyHash, ...safe } = updated;
+      const { editKeyHash: _hash, ...safe } = updated;
       const response = jsonResponse(safe);
       response.headers.set("Content-Security-Policy", buildApiCspHeader());
       return response;

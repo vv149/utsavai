@@ -39,7 +39,7 @@ export function ipv6ToSlash64(ip: string): string {
 
 /** Expands a compressed IPv6 address to full 8-group form. */
 export function expandIpv6(ip: string): string {
-  let halves = ip.split("::");
+  const halves = ip.split("::");
   if (halves.length === 1) {
     return padGroups(halves[0]);
   }

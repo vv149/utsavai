@@ -14,6 +14,7 @@ export function log(
   if (level === "error") {
     console.error(JSON.stringify(entry));
   } else {
+    // eslint-disable-next-line no-console -- structured log to stdout for Cloud Run
     console.log(JSON.stringify(entry));
   }
 }

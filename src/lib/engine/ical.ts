@@ -67,7 +67,7 @@ export function foldLines(content: string): string {
 
     for (const char of line) {
       const charBytes = encoder.encode(char).length;
-      const limit = currentLine === "" && folded.length === 0 ? maxFirst : (folded.length > 0 || currentLine !== "" ? (currentBytes === 0 ? maxCont : (currentBytes + charBytes <= (currentLine === line.substring(0, currentLine.length) && folded[folded.length - 1] === undefined ? maxFirst : maxCont) ? currentBytes + charBytes : 0)) : maxFirst);
+      const _limit = currentLine === "" && folded.length === 0 ? maxFirst : (folded.length > 0 || currentLine !== "" ? (currentBytes === 0 ? maxCont : (currentBytes + charBytes <= (currentLine === line.substring(0, currentLine.length) && folded[folded.length - 1] === undefined ? maxFirst : maxCont) ? currentBytes + charBytes : 0)) : maxFirst);
 
       // ponytail: simplified fold logic
       if (currentBytes + charBytes > (folded.length === 0 && currentLine === "" ? 75 : 74)) {

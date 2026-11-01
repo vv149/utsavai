@@ -1,27 +1,27 @@
 import type { FaqItem } from "./faq";
 
 /** One schema.org node. */
-export type JsonLdNode = {
+export interface JsonLdNode {
   readonly "@type": string;
   readonly "@id": string;
   readonly [key: string]: unknown;
-};
+}
 
 /** A JSON-LD document with every node in one `@graph`. */
-export type JsonLdGraph = {
+export interface JsonLdGraph {
   readonly "@context": "https://schema.org";
   readonly "@graph": readonly JsonLdNode[];
-};
+}
 
 /** Input for building the landing page JSON-LD graph. */
-export type LandingJsonLdInput = {
+export interface LandingJsonLdInput {
   readonly siteUrl: string;
   readonly name: string;
   readonly description: string;
   readonly language: string;
   readonly features: readonly string[];
   readonly faq: readonly FaqItem[];
-};
+}
 
 const nodeRef = (siteUrl: string, fragment: string) => ({ "@id": `${siteUrl}/#${fragment}` });
 

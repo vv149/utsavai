@@ -1,5 +1,5 @@
 /** A single FAQ item used by both the rendered page and JSON-LD structured data. */
-export type FaqItem = { readonly question: string; readonly answer: string };
+export interface FaqItem { readonly question: string; readonly answer: string }
 
 /** FAQ items displayed on the landing page and embedded in JSON-LD. */
 export const FAQ: readonly FaqItem[] = [

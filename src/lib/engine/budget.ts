@@ -93,7 +93,7 @@ export function redistributeBudget(
     }
   }
 
-  let allocated = newAmounts.reduce((s, a) => s + a, 0);
+  const allocated = newAmounts.reduce((s, a) => s + a, 0);
   const gap = remaining - allocated;
 
   for (let i = 0; i < gap && i < newAmounts.length; i++) {

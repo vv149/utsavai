@@ -30,6 +30,6 @@ export async function POST(request: Request): Promise<Response> {
 }
 
 function stripSensitive(plan: Record<string, unknown>): Record<string, unknown> {
-  const { editKeyHash, ...rest } = plan;
+  const { editKeyHash: _hash, ...rest } = plan;
   return rest;
 }

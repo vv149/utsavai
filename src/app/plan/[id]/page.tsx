@@ -3,7 +3,6 @@ import { PlanWorkspace } from "@/components/plan-workspace";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import type { Metadata } from "next";
-import { APP_NAME } from "@/lib/contracts/constants";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { connection } from "next/server";
@@ -39,7 +38,7 @@ async function PlanContent({ params }: { params: Promise<{ id: string }> }) {
     notFound();
   }
 
-  const { editKeyHash, ...safePlan } = plan;
+  const { editKeyHash: _hash, ...safePlan } = plan;
 
   return (
     <>
